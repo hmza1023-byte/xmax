@@ -1,11 +1,27 @@
-<link rel="stylesheet" href="/static/style.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
 <div class="container">
-<h1>👑 الأدمن</h1>
 
-<ul>
+<h1>👑 Admin Panel</h1>
+
+<h2>💰 Total: {{total}}</h2>
+
+<form method="post" action="/add_balance">
+<input name="username" placeholder="username">
+<input name="amount" placeholder="amount">
+<button>Add</button>
+</form>
+
+<table>
+<tr><th>User</th><th>Balance</th><th>Delete</th></tr>
+
 {% for u in users %}
-<li>{{u.username}}</li>
+<tr>
+<td>{{u.username}}</td>
+<td>{{u.balance}}</td>
+<td><a href="/delete/{{u.id}}">❌</a></td>
+</tr>
 {% endfor %}
-</ul>
+</table>
+
 </div>
