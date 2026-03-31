@@ -84,6 +84,9 @@ def dashboard():
         user = User.query.filter_by(username=session["user"]).first()
         return render_template("dashboard.html", user=user)
     return redirect("/")
+@app.route("/")
+def home():
+    return "الموقع شغال 🔥"
 
 # لوحة الادمن
 @app.route("/admin")
