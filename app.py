@@ -99,9 +99,10 @@ def api_users():
     users = User.query.all()
     return jsonify([{"username": u.username} for u in users])
 
-# خروج
 @app.route("/logout")
-def logout
+def logout():
+    session.clear()
+    return redirect("/login")
 
 import os
 port = int(os.environ.get("PORT", 5000))
