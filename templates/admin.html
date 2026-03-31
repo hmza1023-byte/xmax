@@ -1,17 +1,6 @@
-<h2>لوحة التحكم 🔥</h2>
-
-<table border="1">
-<tr>
-<th>ID</th>
-<th>Username</th>
-<th>Admin</th>
-</tr>
-
-{% for user in users %}
-<tr>
-<td>{{ user.id }}</td>
-<td>{{ user.username }}</td>
-<td>{{ user.is_admin }}</td>
-</tr>
+<h1>👑 الأدمن</h1>
+<ul>
+{% for u in users %}
+<li>{{u.username}}</li>
 {% endfor %}
-</table>
+</ul>
