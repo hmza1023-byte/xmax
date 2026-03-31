@@ -4,38 +4,46 @@ import os
 app = Flask(__name__)
 app.secret_key = "secret123"
 
-# الصفحة الرئيسية ✅
+# الصفحة الرئيسية
 @app.route("/")
 def home():
-    return render_template("dashboard.html")
+    return "App is working 🚀"
 
-# تسجيل دخول
+# تسجيل دخول بسيط
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        username = request.form["username"]
-        session["admin"] = True
-        return redirect("/admin")
-    return render_template("login.html")
+        username = request.form.get("username")
+        password = request.form.get("password")
 
-# تسجيل حساب
-@app.route("/register", methods=["GET", "POST"])
-def register():
-    return render_template("register.html")
+        if username == "admin" and password == "1234":
+            session["admin"] = True
+            return redirect("/admin")
+        else:
+            return "❌ خطأ في تسجيل الدخول"
 
-# لوحة الأدمن
+    return '''
+    <form method="post">
+        <input name="username" placeholder="username">
+        <input name="password" placeholder="password" type="password">
+        <button type="submit">Login</button>
+    </form>
+    '''
+
+# صفحة الادمن
 @app.route("/admin")
 def admin():
     if "admin" in session:
-        users = [{"username": "test1"}, {"username": "test2"}]
-        return render_template("admin.html", users=users)
-    return "❌ ممنوع"
+        return "👑 Admin Page"
+    return "❌ Access Denied"
 
 # API
 @app.route("/api/users")
 def api_users():
-    users = [{"username": "test1"}, {"username": "test2"}]
-    return jsonify(users)
+    return jsonify([
+        {"username": "admin"},
+        {"username": "user1"}
+    ])
 
 # تسجيل خروج
 @app.route("/logout")
@@ -43,6 +51,7 @@ def logout():
     session.clear()
     return redirect("/")
 
-# تشغيل السيرفر (مهم لـ Render)
-port = int(os.environ.get("PORT", 5000))
-app.run(host="0.0.0.0", port=port)
+# تشغيل السيرفر (مهم جدا)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
